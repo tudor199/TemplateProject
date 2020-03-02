@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 
 import com.company.templateapplication.entity.Dummy;
 import com.company.templateapplication.repository.DummyRepository;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class DummyViewModel extends AndroidViewModel {
     private DummyRepository dummyRepository;
-    private LiveData<List<Dummy>> dummies;
+    private LiveData<PagedList<Dummy>> dummies;
 
     public DummyViewModel(@NonNull Application application) {
         super(application);
@@ -33,7 +35,7 @@ public class DummyViewModel extends AndroidViewModel {
         dummyRepository.delete(dummy);
     }
 
-    public LiveData<List<Dummy>> getAllDummies() {
+    public LiveData<PagedList<Dummy>> getAllDummies() {
         return dummies;
     }
 

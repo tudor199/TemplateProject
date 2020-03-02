@@ -23,7 +23,7 @@ public abstract class DummyDatabase extends RoomDatabase {
         if (instance ==  null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), DummyDatabase.class, "dummies")
                     .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
+//                    .addCallback(roomCallback)
                     .build();
         }
         return instance;

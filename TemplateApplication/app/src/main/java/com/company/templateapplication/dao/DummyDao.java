@@ -1,6 +1,8 @@
 package com.company.templateapplication.dao;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.PagedList;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,5 +25,5 @@ public interface DummyDao {
     public void delete(Dummy dummy);
 
     @Query("SELECT * FROM dummies ORDER BY id DESC")
-    public LiveData<List<Dummy>> getAllDummies();
+    public DataSource.Factory<Integer, Dummy> getDummyFactory();
 }

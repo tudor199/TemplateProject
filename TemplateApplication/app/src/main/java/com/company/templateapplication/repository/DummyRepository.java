@@ -4,24 +4,31 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
 import com.company.templateapplication.dao.DummyDao;
 import com.company.templateapplication.database.DummyDatabase;
 import com.company.templateapplication.entity.Dummy;
 
-import java.util.List;
-
 public class DummyRepository {
     private DummyDao dummyDao;
-    private LiveData<List<Dummy>> dummies;
+    private LiveData<PagedList<Dummy>> dummies;
 
     public DummyRepository(Application application) {
         DummyDatabase dummyDatabase = DummyDatabase.getInstance(application);
         dummyDao = dummyDatabase.dummyDao();
-        dummies = dummyDao.getAllDummies();
+        DataSource.Factory factory = dummyDao.getDummyFactory();
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setPageSize(10)
+                .setInitialLoadSizeHint(20)
+                .setEnablePlaceholders(false)
+                .build();
+        dummies = new LivePagedListBuilder<>(factory, config).build();
     }
 
-    public LiveData<List<Dummy>> getAllDummies() {
+    public LiveData<PagedList<Dummy>> getAllDummies() {
         return dummies;
     }
 
