@@ -3,8 +3,9 @@ package com.company.templateAPI.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Entity(name = "dummies ")
+@Entity(name = "dummies")
 public class Dummy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
