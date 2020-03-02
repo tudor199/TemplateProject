@@ -56,6 +56,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -75,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Dummy dummy) {
                 Toast.makeText(MainActivity.this, dummy.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        adapter.setOnBottomReachedListener(new DummyAdapter.OnBottomReachedListener() {
+            @Override
+            public void onBottomReached() {
+                Toast.makeText(MainActivity.this, "BOTOTMREACHED", Toast.LENGTH_SHORT).show();
             }
         });
     }

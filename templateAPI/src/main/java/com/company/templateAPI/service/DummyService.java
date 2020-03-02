@@ -3,6 +3,8 @@ package com.company.templateAPI.service;
 import com.company.templateAPI.entity.Dummy;
 import com.company.templateAPI.repository.DummyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,9 @@ public class DummyService {
 
     public List<Dummy> getAll() {
         return dummyRepository.findAll();
+    }
+    public List<Dummy> getAll(Pageable pageable) {
+        return dummyRepository.findAll(pageable).getContent();
     }
 
     public void insert(Dummy dummy) {

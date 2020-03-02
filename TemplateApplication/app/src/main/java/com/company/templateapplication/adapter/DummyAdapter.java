@@ -1,5 +1,6 @@
 package com.company.templateapplication.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,8 @@ import com.company.templateapplication.R;
 import com.company.templateapplication.entity.Dummy;
 
 public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
-    OnItemClickListener listener;
+    OnItemClickListener onItemClickListener;
+    OnBottomReachedListener onBottomReachedListener;
 
     public static final DiffUtil.ItemCallback<Dummy> DIFF_CALLBACK = new DiffUtil.ItemCallback<Dummy>() {
         @Override
@@ -33,12 +35,20 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
         super(DIFF_CALLBACK);
     }
 
-    public void setOnItemClickListerne(OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
     public interface OnItemClickListener {
         void onItemClick(Dummy dummy);
+    }
+
+    public interface OnBottomReachedListener {
+        void onBottomReached();
+    }
+
+    public void setOnItemClickListerne(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
+
+    public void setOnBottomReachedListener(OnBottomReachedListener listener) {
+        this.onBottomReachedListener = listener;
     }
 
     class DummyHolder extends RecyclerView.ViewHolder{
@@ -55,8 +65,8 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if (listener != null && position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(getItem(position));
+                    if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onItemClick(getItem(position));
                     }
                 }
             });
@@ -75,6 +85,11 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
         Dummy dummy = getItem(position);
         holder.name.setText(dummy.getName());
         holder.priority.setText(String.valueOf(dummy.getPriority()));
+        if (position == getItemCount() - 1) {
+            if (onBottomReachedListener != null) {
+                onBottomReachedListener.onBottomReached();
+            }
+        }
     }
 
 
