@@ -89,10 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, dummy.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-        adapter.setOnBottomReachedListener(new DummyAdapter.OnBottomReachedListener() {
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onBottomReached() {
-                Toast.makeText(MainActivity.this, "BOTOTMREACHED", Toast.LENGTH_SHORT).show();
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(MainActivity.this, "ENDOFLIST", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

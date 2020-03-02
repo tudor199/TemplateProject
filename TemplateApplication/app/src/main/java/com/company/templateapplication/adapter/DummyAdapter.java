@@ -16,7 +16,6 @@ import com.company.templateapplication.entity.Dummy;
 
 public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
     OnItemClickListener onItemClickListener;
-    OnBottomReachedListener onBottomReachedListener;
 
     public static final DiffUtil.ItemCallback<Dummy> DIFF_CALLBACK = new DiffUtil.ItemCallback<Dummy>() {
         @Override
@@ -39,16 +38,8 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
         void onItemClick(Dummy dummy);
     }
 
-    public interface OnBottomReachedListener {
-        void onBottomReached();
-    }
-
     public void setOnItemClickListerne(OnItemClickListener listener) {
         this.onItemClickListener = listener;
-    }
-
-    public void setOnBottomReachedListener(OnBottomReachedListener listener) {
-        this.onBottomReachedListener = listener;
     }
 
     class DummyHolder extends RecyclerView.ViewHolder{
@@ -85,11 +76,6 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
         Dummy dummy = getItem(position);
         holder.name.setText(dummy.getName());
         holder.priority.setText(String.valueOf(dummy.getPriority()));
-        if (position == getItemCount() - 1) {
-            if (onBottomReachedListener != null) {
-                onBottomReachedListener.onBottomReached();
-            }
-        }
     }
 
 
