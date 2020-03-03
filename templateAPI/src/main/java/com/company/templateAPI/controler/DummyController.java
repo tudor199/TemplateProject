@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api/v1/dummy")
@@ -16,7 +17,7 @@ public class DummyController {
     @Autowired
     DummyService dummyService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Dummy> getDummies() {
         return dummyService.getAll();
     }
@@ -26,9 +27,23 @@ public class DummyController {
         return dummyService.getAll(pageable);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody Optional<Dummy> getDummyById(@RequestParam("id") Integer id) {
+        return dummyService.getDummy(id);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public String insert(@NotNull @RequestBody Dummy dummy) {
+    public void insertDummy(@NotNull @RequestBody Dummy dummy) {
         dummyService.insert(dummy);
-        return dummy.toString();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public void updateDummy(@NotNull @RequestBody Dummy dummy) {
+        dummyService.update(dummy);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public void deleteDummyById(@RequestParam("id") Integer id) {
+        dummyService.delete(id);
     }
 }

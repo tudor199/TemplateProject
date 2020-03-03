@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int x = new Random().nextInt(1000);
-//                dummyViewModel.insert(new Dummy("Insert Name " + x, x));
+                dummyViewModel.insert(new Dummy("Insert Name " + x, x));
             }
         });
 
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 Dummy dummy = adapter.getDummy(viewHolder.getAdapterPosition());
-//                dummyViewModel.delete(dummy);
+                dummyViewModel.delete(dummy);
                 Toast.makeText(MainActivity.this, dummy.getName() + "has been deleted!", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DummyService {
@@ -22,6 +23,18 @@ public class DummyService {
     }
 
     public void insert(Dummy dummy) {
+        dummyRepository.save(dummy);
+    }
+
+    public void delete(Integer id) {
+        dummyRepository.deleteById(id);
+    }
+
+    public Optional<Dummy> getDummy(Integer id) {
+        return dummyRepository.findById(id);
+    }
+
+    public void update(Dummy dummy) {
         dummyRepository.save(dummy);
     }
 }

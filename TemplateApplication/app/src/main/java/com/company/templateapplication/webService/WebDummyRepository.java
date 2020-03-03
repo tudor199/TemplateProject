@@ -11,6 +11,10 @@ import com.company.templateapplication.common.Constant;
 import com.company.templateapplication.common.DummyRepository;
 import com.company.templateapplication.entity.Dummy;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class WebDummyRepository implements DummyRepository {
     private DummyService dummyService;
     private LiveData<PagedList<Dummy>> dummies;
@@ -24,7 +28,6 @@ public class WebDummyRepository implements DummyRepository {
                 .setPageSize(Constant.ITEMS_PER_PAGE)
                 .setEnablePlaceholders(false)
                 .build();
-
         dummies = new LivePagedListBuilder<>(factory, config).build();
     }
 
@@ -35,16 +38,46 @@ public class WebDummyRepository implements DummyRepository {
 
     @Override
     public void insert(Dummy dummy) {
+        dummyService.insertDummy(dummy).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
     public void update(Dummy dummy) {
+        dummyService.updateDummy(dummy.getId(), dummy).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
     public void delete(Dummy dummy) {
+        dummyService.deleteDummyById(dummy.getId())
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
 
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                    }
+                });
     }
 }

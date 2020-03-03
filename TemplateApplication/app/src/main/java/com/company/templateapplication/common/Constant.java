@@ -7,4 +7,6 @@ public class Constant {
 
     public static final int ITEMS_PER_PAGE = 12;
     public static final int FIRST_PAGE = 1;
+
+    public static final int CALLBACK_FAILURE_ERROR_CODE = 101;
 }
