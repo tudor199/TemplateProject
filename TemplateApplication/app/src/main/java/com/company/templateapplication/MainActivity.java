@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,6 @@ import com.company.templateapplication.entity.Dummy;
 import com.company.templateapplication.viewModel.DummyViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         dummyViewModel = ViewModelProviders.of(this).get(DummyViewModel.class);
-        dummyViewModel.getAllDummies().observe(this, new Observer<List<Dummy>>() {
+        dummyViewModel.getAllDummies().observe(this, new Observer<PagedList<Dummy>>() {
             @Override
-            public void onChanged(List<Dummy> dummies) {
+            public void onChanged(PagedList<Dummy> dummies) {
                 adapter.submitList(dummies);
             }
         });
@@ -53,18 +53,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int x = new Random().nextInt(1000);
                 dummyViewModel.insert(new Dummy("Insert Name " + x, x));
-            }
-        });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
             }
         });
 
@@ -87,15 +75,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Dummy dummy) {
                 Toast.makeText(MainActivity.this, dummy.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if (!recyclerView.canScrollVertically(1)) {
-                    Toast.makeText(MainActivity.this, "ENDOFLIST", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }

@@ -1,38 +1,48 @@
-package com.company.templateapplication.repository;
+package com.company.templateapplication.roomService;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
 
-import com.company.templateapplication.dao.DummyDao;
-import com.company.templateapplication.database.DummyDatabase;
+import com.company.templateapplication.common.DummyRepository;
 import com.company.templateapplication.entity.Dummy;
 
-import java.util.List;
-
-public class DummyRepository {
+public class RoomDummyRepository implements DummyRepository {
     private DummyDao dummyDao;
-    private LiveData<List<Dummy>> dummies;
+    private LiveData<PagedList<Dummy>> dummies;
 
-    public DummyRepository(Application application) {
+    public RoomDummyRepository(Application application) {
         DummyDatabase dummyDatabase = DummyDatabase.getInstance(application);
         dummyDao = dummyDatabase.dummyDao();
-        dummies = dummyDao.getAllDummies();
+        DataSource.Factory factory = dummyDao.getDummyFactory();
+        PagedList.Config config = new PagedList.Config.Builder()
+                .setPageSize(10)
+                .setInitialLoadSizeHint(20)
+                .setEnablePlaceholders(false)
+                .build();
+        dummies = new LivePagedListBuilder<>(factory, config).build();
     }
 
-    public LiveData<List<Dummy>> getAllDummies() {
+    @Override
+    public LiveData<PagedList<Dummy>> getAllDummies() {
         return dummies;
     }
 
+    @Override
     public void insert(Dummy dummy) {
         new InsertAsyncTask(dummyDao).execute(dummy);
     }
 
+    @Override
     public void update(Dummy dummy) {
         new UpdateAsyncTask(dummyDao).execute(dummy);
     }
 
+    @Override
     public void delete(Dummy dummy) {
         new DeleteAsyncTask(dummyDao).execute(dummy);
     }

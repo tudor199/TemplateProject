@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.company.templateapplication.R;
 import com.company.templateapplication.entity.Dummy;
 
-public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
+public class DummyAdapter extends PagedListAdapter<Dummy, DummyAdapter.DummyHolder> {
     OnItemClickListener onItemClickListener;
 
     public static final DiffUtil.ItemCallback<Dummy> DIFF_CALLBACK = new DiffUtil.ItemCallback<Dummy>() {
@@ -74,8 +75,10 @@ public class DummyAdapter extends ListAdapter<Dummy, DummyAdapter.DummyHolder> {
     @Override
     public void onBindViewHolder(@NonNull DummyHolder holder, int position) {
         Dummy dummy = getItem(position);
-        holder.name.setText(dummy.getName());
-        holder.priority.setText(String.valueOf(dummy.getPriority()));
+        if (dummy != null) {
+            holder.name.setText(dummy.getName());
+            holder.priority.setText(String.valueOf(dummy.getPriority()));
+        }
     }
 
 
