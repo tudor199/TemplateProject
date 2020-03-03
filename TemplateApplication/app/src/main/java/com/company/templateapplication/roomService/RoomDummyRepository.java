@@ -1,4 +1,4 @@
-package com.company.templateapplication.repository;
+package com.company.templateapplication.roomService;
 
 import android.app.Application;
 import android.os.AsyncTask;
@@ -8,15 +8,14 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
-import com.company.templateapplication.dao.DummyDao;
-import com.company.templateapplication.database.DummyDatabase;
+import com.company.templateapplication.common.DummyRepository;
 import com.company.templateapplication.entity.Dummy;
 
-public class DummyRepository {
+public class RoomDummyRepository implements DummyRepository {
     private DummyDao dummyDao;
     private LiveData<PagedList<Dummy>> dummies;
 
-    public DummyRepository(Application application) {
+    public RoomDummyRepository(Application application) {
         DummyDatabase dummyDatabase = DummyDatabase.getInstance(application);
         dummyDao = dummyDatabase.dummyDao();
         DataSource.Factory factory = dummyDao.getDummyFactory();
@@ -28,18 +27,22 @@ public class DummyRepository {
         dummies = new LivePagedListBuilder<>(factory, config).build();
     }
 
+    @Override
     public LiveData<PagedList<Dummy>> getAllDummies() {
         return dummies;
     }
 
+    @Override
     public void insert(Dummy dummy) {
         new InsertAsyncTask(dummyDao).execute(dummy);
     }
 
+    @Override
     public void update(Dummy dummy) {
         new UpdateAsyncTask(dummyDao).execute(dummy);
     }
 
+    @Override
     public void delete(Dummy dummy) {
         new DeleteAsyncTask(dummyDao).execute(dummy);
     }

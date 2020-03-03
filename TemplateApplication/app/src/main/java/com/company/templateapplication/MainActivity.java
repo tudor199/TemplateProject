@@ -20,7 +20,6 @@ import com.company.templateapplication.entity.Dummy;
 import com.company.templateapplication.viewModel.DummyViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,19 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int x = new Random().nextInt(1000);
-                dummyViewModel.insert(new Dummy("Insert Name " + x, x));
-            }
-        });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+//                dummyViewModel.insert(new Dummy("Insert Name " + x, x));
             }
         });
 
@@ -79,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 Dummy dummy = adapter.getDummy(viewHolder.getAdapterPosition());
-                dummyViewModel.delete(dummy);
+//                dummyViewModel.delete(dummy);
                 Toast.makeText(MainActivity.this, dummy.getName() + "has been deleted!", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);

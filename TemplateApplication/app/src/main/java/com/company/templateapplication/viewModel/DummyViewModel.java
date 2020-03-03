@@ -5,13 +5,11 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.paging.DataSource;
 import androidx.paging.PagedList;
 
+import com.company.templateapplication.common.DummyRepository;
 import com.company.templateapplication.entity.Dummy;
-import com.company.templateapplication.repository.DummyRepository;
-
-import java.util.List;
+import com.company.templateapplication.webService.WebDummyRepository;
 
 public class DummyViewModel extends AndroidViewModel {
     private DummyRepository dummyRepository;
@@ -19,7 +17,7 @@ public class DummyViewModel extends AndroidViewModel {
 
     public DummyViewModel(@NonNull Application application) {
         super(application);
-        dummyRepository = new DummyRepository(application);
+        dummyRepository = new WebDummyRepository(application);
         dummies = dummyRepository.getAllDummies();
     }
 

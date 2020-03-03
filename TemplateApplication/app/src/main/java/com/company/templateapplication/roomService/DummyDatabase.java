@@ -1,4 +1,4 @@
-package com.company.templateapplication.database;
+package com.company.templateapplication.roomService;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -9,7 +9,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.company.templateapplication.dao.DummyDao;
 import com.company.templateapplication.entity.Dummy;
 
 import java.util.Random;
